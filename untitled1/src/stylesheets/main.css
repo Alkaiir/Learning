@@ -1,3 +1,45 @@
+@font-face {
+    font-family: "Nunito Sans";
+    src: local("Nunito Sans Regular"),
+    local("Nunito Sans Regular"),
+    url("../fonts/NunitoSans-Regular.ttf") format("ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Nunito Sans";
+    src: local("Nunito Sans Bold"),
+    local("Nunito Sans Bold"),
+    url("../fonts/NunitoSans-Bold.ttf") format("ttf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Nunito Sans";
+    src: local("Nunito Sans SemiBold"),
+    local("Nunito Sans SemiBold"),
+    url("../fonts/NunitoSans-SemiBold.ttf") format("ttf");
+    font-weight: 600;
+}
+
+
+@font-face {
+    font-family: "Nunito Sans";
+    src: local("Nunito Sans ExtraBold"),
+    local("Nunito Sans ExtraBold"),
+    url("../fonts/NunitoSans-ExtraBold.ttf") format("ttf");
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: local("Inter Medium"),
+    local("Inter Medium"),
+    url("../fonts/Inter-Medium.otf") format("otf");
+    font-weight: 500;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -24,6 +66,10 @@ main {
     z-index: 5;
 }
 
+a, button {
+    cursor: pointer;
+}
+
 .title {
     font-size: 2.4rem;
     text-transform: uppercase;
@@ -41,9 +87,6 @@ main {
 
 .button {
     cursor: pointer;
-    font-family: Nunito Sans, sans-serif;
-    font-style: normal;
-    line-height: normal;
     font-size: 0.8rem;
     color: white;
     border: none;
@@ -59,7 +102,7 @@ main {
     justify-content: space-between;
 }
 
-.header-contacts-personal {
+.header-contacts__personal {
     display: flex;
     align-items: center;
     gap: 44px;
@@ -149,9 +192,7 @@ main {
     justify-content: center;
     font-family: Inter, sans-serif;
     font-size: 10px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
     background-color: #18154B;
     border-radius: 50%;
     right: -5px;
@@ -183,7 +224,7 @@ main {
     box-shadow: 0 4px 20px 0 rgba(0, 7, 94, 0.1);
 }
 
-.main-banner-block-left-content__subtitle {
+.main-banner-block-left__subtitle {
     color: white;
     font-size: 18px;
     font-weight: 600;
@@ -191,8 +232,7 @@ main {
     margin-bottom: 30px;
 }
 
-.main-banner-block-left-content__button {
-    font-family: Nunito Sans, sans-serif;
+.main-banner-block-left__button {
     color: #18154B;
     font-size: 15px;
     font-weight: 700;
@@ -203,7 +243,7 @@ main {
     cursor: pointer;
 }
 
-.main-banner-block-left-content-paggination-links {
+.main-banner-block-left__paggination-links {
     position: absolute;
     display: flex;
     gap: 10px;
@@ -211,7 +251,7 @@ main {
     bottom: 30px;
 }
 
-.main-banner-block-left-content-paggination-links__button {
+.main-banner-block-left__paggination-links-button {
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -221,7 +261,7 @@ main {
     cursor: pointer;
 }
 
-.main-banner-block-left-content-paggination-links__button--active {
+.main-banner-block-left__paggination-links-button--active {
     opacity: 1;
 }
 
@@ -238,11 +278,11 @@ main {
     justify-content: space-between;
 }
 
-.main-banner-block-right-content {
+.main-banner-block-right__content {
     display: grid;
 }
 
-.main-banner-block-right-content__title {
+.main-banner-block-right__title {
     color: white;
     font-size: 28px;
     font-weight: 800;
@@ -253,7 +293,7 @@ main {
     grid-row-end: 2;
 }
 
-.main-banner-block-right-content__sale {
+.main-banner-block-right__sale {
     color: white;
     font-size: 56px;
     font-weight: 700;
@@ -264,7 +304,7 @@ main {
     grid-row-end: 3;
 }
 
-.main-banner-block-right-content__desc {
+.main-banner-block-right__desc {
     color: white;
     font-size: 18px;
     font-weight: 600;
@@ -524,7 +564,6 @@ main {
 
 .main-best-content__buy-button {
     cursor: pointer;
-    font-family: Nunito Sans, sans-serif;
     border-radius: 50px;
     background: linear-gradient(74deg, #0D748B -10.13%, #1A0B73 75.49%), #FFF;
     border: none;
