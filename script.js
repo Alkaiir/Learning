@@ -1,4 +1,5 @@
-document.getElementById('menu__button').addEventListener('click', function(event) {event.preventDefault()});
+document.getElementById('menu__button').addEventListener('click',
+    function(event) {event.preventDefault()});
 
  async function formSwitch  () {
     let formContainer = document.getElementById("form__container");
@@ -35,18 +36,21 @@ document.getElementById('menu__button').addEventListener('click', function(event
        }
        form.append(input);
     }
-   // // Добавление ссылок
-   //  for (let i = 1; i < json.references.length+1; ++i) {
-   //     let label = document.createElement('label');
-   //     label.innerHTML = json.references[i-1].label;
-   //     form.append(label);
-   //     let input = document.createElement('input');
-   //     input.setAttribute('type', json.references[i-1].input.type)
-   //     if (json.references[i-1].input.required === true) {
-   //        input.setAttribute('required', true);
-   //     }
-   //     form.append(input);
-   //  }
+   // Добавление ссылок
+    for (let i = 1; i < json.references.length+1; ++i) {
+       let input = document.createElement('input');
+       input.setAttribute('type', json.references[i-1].input.type)
+       if (json.references[i-1].input.required === true) {
+          input.setAttribute('required', true);
+       }
+       if (json.references[i-1].input.checked === 'false') {
+         input.setAttribute('checked', true);
+       }
+       form.append(input);
+       let p = document.createElement('p');
+       p.innerHTML = json.references[i-1].;
+
+    }
 
     // Добавление кнопок
     for (let i = 1; i < json.buttons.length+1; ++i) {
