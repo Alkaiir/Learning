@@ -36,7 +36,7 @@
         }
     }
 ],
-"references":[
+    "references":[
     {
       "input":{
         "type":"checkbox",
@@ -49,7 +49,7 @@
         "text":"View Author Post",
         "ref":"viewauthor"
     }
-  ],
+],
     "buttons":[
     {
         "text":"Create Post"

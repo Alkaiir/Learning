@@ -1,68 +1,77 @@
-document.getElementById('menu__button').addEventListener('click',
-    function(event) {event.preventDefault()});
+let formSwitch = () => {
+    let formContainer = document.querySelector("#form__container");
 
- async function formSwitch  () {
-    let formContainer = document.getElementById("form__container");
+    let pathInput = document.querySelector('#menu__input');
 
+    let file = pathInput.files[0];
 
+    let reader = new FileReader();
 
-    let pathInput = document.getElementById('menu__input').value;
-    console.log('Путь до выбранного файла: ' + pathInput);
+    reader.readAsText(file);
 
+    reader.onload = function() {
+       let string = reader.result;
 
-    console.log(formContainer);
+       let json = JSON.parse(string);
 
-    let response = await fetch(pathInput);
-    let json = await response.json();
-    console.log(json);
+       let form = document.createElement('form');
+       form.setAttribute("id",json.name);
 
+       // Генерация полей
 
+       let fields = json.fields;
 
-    let form = document.createElement('form');
-    form.setAttribute("id",json.name);
+       for (let i = 0; i < fields.length; ++i) {
+           let fieldsNth = fields[i];
 
-   // Добавление полей
-    for (let i = 1; i < json.fields.length+1; ++i) {
-       let label = document.createElement('label');
-       label.innerHTML = json.fields[i-1].label;
-       form.append(label);
-       let input = document.createElement('input');
-       input.setAttribute('type', json.fields[i-1].input.type)
-       if (json.fields[i-1].input.required === true) {
-          input.setAttribute('required', true);
+           //Добавление label если они есть в JSON
+
+           if (fieldsNth.label !== undefined) {
+               let label = document.createElement('label');
+               label.innerHTML = fieldsNth.label;
+               form.append(label);
+           }
+
+           //Добавление input
+           if ()
+           let input = document.createElement('input');
+           input.setAttribute('type', fieldsNth.input.type);
+           form.append(input);
+
+           //Добавление required если он есть в JSON
+
+           if (fieldsNth.required !== undefined) {
+               input.setAttribute('required');
+           }
+
+           //Добавление placeholder если он есть в JSON
+
+           if (fieldsNth.input !== undefined ){
+               input.setAttribute('placeholder', fieldsNth.input.placeholder);
+           }
+
        }
-       if(json.fields[i-1].input.placeholder !== ''){
-          input.setAttribute('placeholder', json.fields[i-1].input.placeholder);
-       }
-       form.append(input);
-    }
-   // Добавление ссылок
-    for (let i = 1; i < json.references.length+1; ++i) {
-       let input = document.createElement('input');
-       input.setAttribute('type', json.references[i-1].input.type)
-       if (json.references[i-1].input.required === true) {
-          input.setAttribute('required', true);
-       }
-       if (json.references[i-1].input.checked === 'false') {
-         input.setAttribute('checked', true);
-       }
-       form.append(input);
-       let p = document.createElement('p');
-       p.innerHTML = json.references[i-1].;
+        // Генерация ссылок
 
-    }
+        // Генерация кнопок
 
-    // Добавление кнопок
-    for (let i = 1; i < json.buttons.length+1; ++i) {
-       let button = document.createElement('button');
-       button.innerHTML = json.buttons[i-1].text;
-       button.className = 'button'
-       form.append(button);
-    }
+        let buttons = json.buttons;
 
-    formContainer.append(form);
+        for (let i = 0; i < buttons.length; ++i) {
+            let buttonsNth = buttons[i];
+            let button = document.createElement('button');
+            button.innerHTML = buttonsNth.text;
+            form.append(button);
+        }
 
-}
+
+
+        formContainer.append(form);
+    };
+};
+
+
+document.querySelector('#menu__input').addEventListener('change',formSwitch);
 
 
 
