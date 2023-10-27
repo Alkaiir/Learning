@@ -1,4 +1,11 @@
 let formSwitch = () => {
+    let oldFormContainer = document.querySelector("#form__container");
+    oldFormContainer.remove();
+    let div = document.createElement('div');
+    div.setAttribute('id', 'form__container' );
+    div.setAttribute('class', 'form__container');
+    document.body.append(div);
+
     let formContainer = document.querySelector("#form__container");
 
     let pathInput = document.querySelector('#menu__input');
@@ -10,6 +17,7 @@ let formSwitch = () => {
     reader.readAsText(file);
 
     reader.onload = function() {
+        console.log(reader.result);
        let string = reader.result;
 
        let json = JSON.parse(string);
@@ -33,7 +41,6 @@ let formSwitch = () => {
            }
 
            //Добавление input
-           if ()
            let input = document.createElement('input');
            input.setAttribute('type', fieldsNth.input.type);
            form.append(input);
