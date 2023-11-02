@@ -21,8 +21,6 @@ let formSwitch = () => {
 
         let json = JSON.parse(string);
 
-        console.log(json.fields);
-
         let form = document.createElement('form');
         form.setAttribute("id", json.name);
 
