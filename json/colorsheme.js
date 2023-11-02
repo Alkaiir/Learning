@@ -9,11 +9,11 @@
             }
         },
         {
+            "label":"Turn on dark theme?",
             "input":{
                 "type":"checkbox",
                 "checked":"false"
-            },
-            "label":"Turn on dark theme?"
+            }
         }
     ]
 }

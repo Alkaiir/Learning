@@ -17,7 +17,6 @@ let formSwitch = () => {
     reader.readAsText(file);
 
     reader.onload = function() {
-        console.log(reader.result);
        let string = reader.result;
 
        let json = JSON.parse(string);
@@ -28,10 +27,10 @@ let formSwitch = () => {
        // Генерация полей
 
        let fields = json.fields;
-
+       console.log(fields);
        for (let i = 0; i < fields.length; ++i) {
            let fieldsNth = fields[i];
-
+            console.log(fieldsNth.input);
            //Добавление label если они есть в JSON
 
            if (fieldsNth.label !== undefined) {
@@ -41,20 +40,60 @@ let formSwitch = () => {
            }
 
            //Добавление input
-           let input = document.createElement('input');
-           input.setAttribute('type', fieldsNth.input.type);
-           form.append(input);
+           if (fieldsNth.input.type === 'color'){
+               let select = document.createElement('select');
+               for (let i in fieldsNth.input.colors){
+                   let option = document.createElement('option');
+                   option.setAttribute('id', fieldsNth.input.colors[i]);
+                   option.innerHTML = fieldsNth.input.colors[i];
+                   select.append(option);
+               }
+               form.append(select);
 
-           //Добавление required если он есть в JSON
-
-           if (fieldsNth.required !== undefined) {
-               input.setAttribute('required');
            }
 
-           //Добавление placeholder если он есть в JSON
+           if (fieldsNth.input.type === 'technology') {
+               let select = document.createElement('select');
 
-           if (fieldsNth.input !== undefined ){
-               input.setAttribute('placeholder', fieldsNth.input.placeholder);
+               if(fieldsNth.input.multiple !== undefined) {
+                   select.setAttribute('multiple', true);
+               }
+
+               for (let i = 0 ; i < fieldsNth.input.technologies.length; ++i){
+                   let option = document.createElement('option');
+                   option.setAttribute('id', fieldsNth.input.technologies[i]);
+                   option.innerHTML = fieldsNth.input.technologies[i];
+                   select.append(option);
+               }
+               form.append(select);
+
+           }
+
+           if (fieldsNth.input.type !== undefined && fieldsNth.input.type !== 'color' && fieldsNth.input.type !== 'technology'){
+               let input = document.createElement('input');
+               input.setAttribute('type', fieldsNth.input.type);
+
+               //Добавление required если он есть в JSON
+
+               if (fieldsNth.input.required !== undefined) {
+                   input.setAttribute('required', true);
+               }
+
+               //Добавление placeholder если он есть в JSON
+
+               if (fieldsNth.input.placeholder !== undefined ){
+                   input.setAttribute('placeholder', fieldsNth.input.placeholder);
+
+               }
+
+               //Добавление checked если он есть в JSON
+
+               if (fieldsNth.input.checked !== undefined ){
+                   input.setAttribute('checked', false);
+
+               }
+
+               form.append(input);
            }
 
        }
