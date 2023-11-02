@@ -21,13 +21,15 @@ let formSwitch = () => {
 
         let json = JSON.parse(string);
 
+        console.log(json.fields);
+
         let form = document.createElement('form');
         form.setAttribute("id", json.name);
 
         // Генерация полей
 
         let fields = json.fields;
-        for (let i = 0; i < fields.length; ++i) {
+        for (i in fields) {
             let fieldsNth = fields[i];
             //Добавление label если они есть в JSON
 
@@ -70,7 +72,9 @@ let formSwitch = () => {
             if (fieldsNth.input.type !== undefined && fieldsNth.input.type !== 'color' && fieldsNth.input.type !== 'technology') {
                 let input = document.createElement('input');
                 input.setAttribute('type', fieldsNth.input.type);
-
+                if (fieldsNth.input.type === 'checkbox') {
+                    input.setAttribute('class', 'checkbox');
+                }
                 //Добавление required если он есть в JSON
 
                 if (fieldsNth.input.required !== undefined) {
@@ -96,52 +100,54 @@ let formSwitch = () => {
 
         }
         // Генерация ссылок
-        let refs = json.references;
-        console.log(refs);
-        let div = document.createElement('div');
-        for (let i = 0; i < refs.length; ++i) {
-            // console.log(refs[i]);
-            if (refs[i]['text without ref'] !== undefined) {
-                let text = document.createElement('p');
-                text.innerHTML = refs[i]['text without ref'];
-                form.append(text);
-            }
-
-            if (refs[i].input !== undefined) {
-                let input = document.createElement('input')
-                input.setAttribute('type', refs[i].input.type);
-                input.setAttribute('class', 'checkbox');
-                if (refs[i].input.required !== undefined) {
-                    input.setAttribute('required', true);
+        if (json.references !== undefined) {
+            let refs = json.references;
+            let div = document.createElement('div');
+            for (let i = 0; i < refs.length; ++i) {
+                // console.log(refs[i]);
+                if (refs[i]['text without ref'] !== undefined) {
+                    let text = document.createElement('p');
+                    text.innerHTML = refs[i]['text without ref'];
+                    form.append(text);
                 }
 
-                if (refs[i].input.checked !== undefined) {
-                    input.setAttribute('checked', false);
+                if (refs[i].input !== undefined) {
+                    let input = document.createElement('input')
+                    input.setAttribute('type', refs[i].input.type);
+                    input.setAttribute('class', 'checkbox');
+                    if (refs[i].input.required !== undefined) {
+                        input.setAttribute('required', true);
+                    }
+
+                    if (refs[i].input.checked === 'true') {
+                        input.setAttribute('checked', true);
+                    } else {
+                        input.setAttribute('checked', false);
+
+                    }
+
+                    div.append(input);
+
                 } else {
-                    input.setAttribute('checked', true);
+
+                    let link = document.createElement('a');
+                    link.innerHTML = refs[i].text;
+                    link.setAttribute('href', refs[i].ref);
+                    div.setAttribute('class', 'links_block')
+                    div.append(link);
+
                 }
-                
-                div.append(input);
-
-            } else {
-
-                let link = document.createElement('a');
-                link.innerHTML = refs[i].text;
-                link.setAttribute('href', refs[i].ref);
-                div.setAttribute('class', 'links_block')
-                div.append(link);
-
             }
-        }
 
-        form.append(div);
+            form.append(div);
+        }
 
 
         // Генерация кнопок
 
         let buttons = json.buttons;
 
-        for (let i = 0; i < buttons.length; ++i) {
+        for (i in buttons) {
             let buttonsNth = buttons[i];
             let button = document.createElement('button');
             button.innerHTML = buttonsNth.text;
