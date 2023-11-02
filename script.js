@@ -17,87 +17,125 @@ let formSwitch = () => {
     reader.readAsText(file);
 
     reader.onload = function() {
-       let string = reader.result;
+        let string = reader.result;
 
-       let json = JSON.parse(string);
+        let json = JSON.parse(string);
 
-       let form = document.createElement('form');
-       form.setAttribute("id",json.name);
+        let form = document.createElement('form');
+        form.setAttribute("id", json.name);
 
-       // Генерация полей
+        // Генерация полей
 
-       let fields = json.fields;
-       console.log(fields);
-       for (let i = 0; i < fields.length; ++i) {
-           let fieldsNth = fields[i];
-            console.log(fieldsNth.input);
-           //Добавление label если они есть в JSON
+        let fields = json.fields;
+        for (let i = 0; i < fields.length; ++i) {
+            let fieldsNth = fields[i];
+            //Добавление label если они есть в JSON
 
-           if (fieldsNth.label !== undefined) {
-               let label = document.createElement('label');
-               label.innerHTML = fieldsNth.label;
-               form.append(label);
-           }
+            if (fieldsNth.label !== undefined) {
+                let label = document.createElement('label');
+                label.innerHTML = fieldsNth.label;
+                form.append(label);
+            }
 
-           //Добавление input
-           if (fieldsNth.input.type === 'color'){
-               let select = document.createElement('select');
-               for (let i in fieldsNth.input.colors){
-                   let option = document.createElement('option');
-                   option.setAttribute('id', fieldsNth.input.colors[i]);
-                   option.innerHTML = fieldsNth.input.colors[i];
-                   select.append(option);
-               }
-               form.append(select);
+            //Добавление input
+            if (fieldsNth.input.type === 'color') {
+                let select = document.createElement('select');
+                for (let i in fieldsNth.input.colors) {
+                    let option = document.createElement('option');
+                    option.setAttribute('id', fieldsNth.input.colors[i]);
+                    option.innerHTML = fieldsNth.input.colors[i];
+                    select.append(option);
+                }
+                form.append(select);
 
-           }
+            }
 
-           if (fieldsNth.input.type === 'technology') {
-               let select = document.createElement('select');
+            if (fieldsNth.input.type === 'technology') {
+                let select = document.createElement('select');
 
-               if(fieldsNth.input.multiple !== undefined) {
-                   select.setAttribute('multiple', true);
-               }
+                if (fieldsNth.input.multiple !== undefined) {
+                    select.setAttribute('multiple', true);
+                }
 
-               for (let i = 0 ; i < fieldsNth.input.technologies.length; ++i){
-                   let option = document.createElement('option');
-                   option.setAttribute('id', fieldsNth.input.technologies[i]);
-                   option.innerHTML = fieldsNth.input.technologies[i];
-                   select.append(option);
-               }
-               form.append(select);
+                for (let i = 0; i < fieldsNth.input.technologies.length; ++i) {
+                    let option = document.createElement('option');
+                    option.setAttribute('id', fieldsNth.input.technologies[i]);
+                    option.innerHTML = fieldsNth.input.technologies[i];
+                    select.append(option);
+                }
+                form.append(select);
 
-           }
+            }
 
-           if (fieldsNth.input.type !== undefined && fieldsNth.input.type !== 'color' && fieldsNth.input.type !== 'technology'){
-               let input = document.createElement('input');
-               input.setAttribute('type', fieldsNth.input.type);
+            if (fieldsNth.input.type !== undefined && fieldsNth.input.type !== 'color' && fieldsNth.input.type !== 'technology') {
+                let input = document.createElement('input');
+                input.setAttribute('type', fieldsNth.input.type);
 
-               //Добавление required если он есть в JSON
+                //Добавление required если он есть в JSON
 
-               if (fieldsNth.input.required !== undefined) {
-                   input.setAttribute('required', true);
-               }
+                if (fieldsNth.input.required !== undefined) {
+                    input.setAttribute('required', true);
+                }
 
-               //Добавление placeholder если он есть в JSON
+                //Добавление placeholder если он есть в JSON
 
-               if (fieldsNth.input.placeholder !== undefined ){
-                   input.setAttribute('placeholder', fieldsNth.input.placeholder);
+                if (fieldsNth.input.placeholder !== undefined) {
+                    input.setAttribute('placeholder', fieldsNth.input.placeholder);
 
-               }
+                }
 
-               //Добавление checked если он есть в JSON
+                //Добавление checked если он есть в JSON
 
-               if (fieldsNth.input.checked !== undefined ){
-                   input.setAttribute('checked', false);
+                if (fieldsNth.input.checked !== undefined) {
+                    input.setAttribute('checked', false);
 
-               }
+                }
 
-               form.append(input);
-           }
+                form.append(input);
+            }
 
-       }
+        }
         // Генерация ссылок
+        let refs = json.references;
+        console.log(refs);
+        let div = document.createElement('div');
+        for (let i = 0; i < refs.length; ++i) {
+            // console.log(refs[i]);
+            if (refs[i]['text without ref'] !== undefined) {
+                let text = document.createElement('p');
+                text.innerHTML = refs[i]['text without ref'];
+                form.append(text);
+            }
+
+            if (refs[i].input !== undefined) {
+                let input = document.createElement('input')
+                input.setAttribute('type', refs[i].input.type);
+                input.setAttribute('class', 'checkbox');
+                if (refs[i].input.required !== undefined) {
+                    input.setAttribute('required', true);
+                }
+
+                if (refs[i].input.checked !== undefined) {
+                    input.setAttribute('checked', false);
+                } else {
+                    input.setAttribute('checked', true);
+                }
+                
+                div.append(input);
+
+            } else {
+
+                let link = document.createElement('a');
+                link.innerHTML = refs[i].text;
+                link.setAttribute('href', refs[i].ref);
+                div.setAttribute('class', 'links_block')
+                div.append(link);
+
+            }
+        }
+
+        form.append(div);
+
 
         // Генерация кнопок
 
