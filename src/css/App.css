@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Merriweather";
+  src: local("Merriweather Regular"), url("@/fonts/Merriweather-Regular.ttf") format("ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Merriweather";
+  src: local("Merriweather Bold"), url("@/fonts/Merriweather-Bold.ttf") format("ttf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Merriweather";
+  src: local("Merriweather Light"), url("@/fonts/Merriweather-Light.ttf") format("ttf");
+  font-weight: 300;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Merriweather sans-serif;
+  background-color: #0A0909;
+  padding-top: 30px;
+  padding-right: calc((100vw - 1180px) / 2);
+  padding-left: calc((100vw - 1180px) / 2);
+}
+
+/*# sourceMappingURL=App.css.map */
