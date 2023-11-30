@@ -1,20 +1,16 @@
-<script>
+<script setup>
 import RefreshButton from '@/components/UI/RefreshButton.vue'
-
-export default {
-  name: 'AppHeader',
-  components: {
-    RefreshButton
-  }
-}
+import { getPosts } from '@/composeble/api/NewsApi'
 </script>
 
 <template>
   <div class="header-content">
-    <h1 class="header-content__logo">
+    <h1
+      @click="$router.push('/')"
+      class="header-content__logo">
       HackerNews
     </h1>
-    <refresh-button></refresh-button>
+    <refresh-button @click="getPosts()"></refresh-button>
   </div>
 </template>
 

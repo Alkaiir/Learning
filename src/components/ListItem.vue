@@ -1,37 +1,34 @@
-<script>
-export default {
-  name: 'ListItem',
-  props: {
-    postId: {
-      type: Number,
-      required: true
-    }
-  },
-  data () {
-    return {
-      postData: {}
-    }
-  },
-  methods: {
-    getItems: async function () {
-      const url = 'https://hacker-news.firebaseio.com/v0/item/' + this.postId + '.json?print=pretty'
-      const response = await fetch(url)
-      const json = await response.json()
-      this.postData = json
-    }
-  },
-  mounted () {
-    this.getItems()
+<script setup>
+import { getPost } from '@/composeble/api/NewsApi'
+import { ref, onMounted, defineProps } from 'vue'
+let postData = ref({})
+
+const props = defineProps({
+  postId: {
+    type: Number,
+    required: true
   }
+})
+
+const getPostData = async () => {
+  postData = await getPost(props.postId)
+  console.log(postData)
 }
+
+onMounted(() => {
+  getPostData()
+})
 </script>
 
 <template>
   <section class="home-content__post">
-    <h2 class="home-content__title">{{postData.title}}</h2>
-    <p class="home-content__author">Author: {{postData.by}}</p>
-    <p class="home-content__rate">Rate: {{postData.score}}</p>
-    <p class="home-content__date">{{postData.time}}</p>
+    <h2 class="home-content__title">{{ postData }}</h2>
+    <p class="home-content__author">Author: {{ postData.by }}</p>
+    <p class="home-content__rate">Rate: {{ postData.score }}</p>
+    <p class="home-content__date">{{ postData.time }}</p>
+    <p @click="$router.push(`new/${postId}`)" class="home-content__link">
+      See More
+    </p>
   </section>
 </template>
 
